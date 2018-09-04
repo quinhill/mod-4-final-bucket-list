@@ -69,15 +69,46 @@ describe('All routes', () => {
           done();
         });
       });
-    });
-
-    it('should not create a record with missing data', done => {
-      chai.request(server)
-      .post('/api/v1/projects')
-      .send({ description: 'Super dooper!' })
-      .end((err, response) => {
-        response.should.have.status(404);
-        done();
+      
+      it('should not create a record with missing data', done => {
+        chai.request(server)
+        .post('/api/v1/projects')
+        .send({ description: 'Super dooper!' })
+        .end((err, response) => {
+          response.should.have.status(404);
+          done();
+        });
       });
     });
+
+  describe('DELETE /api/v1/bucket_list', () => {
+    it('should delete an item by its ID', done => {
+      chai.request(server)
+        .delete('/api/v1/bucket_list/1')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.equal(1);
+        });
+
+      chai.request(server)
+        .get('/api/v1/bucket_list')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.length.should.equal(2);
+          done();
+        });
+    });
+
+    it('should return an error if the ID does not exist', done => {
+      chai.request(server)
+        .delete('/api/v1/bucket_list/5')
+        .end((err, res) => {
+          res.should.have.status(422);
+          res.error.text.should.equal('{"error":"422: No items found matching that ID."}');
+          done();
+        });
+    });
+  });
 }); 
