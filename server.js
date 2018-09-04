@@ -6,14 +6,12 @@ const app = express();
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
-app.locals.title = 'bucket_list';
+app.locals.title = 'Bucket List';
 app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (request, response) => {
-  response.sendFile('index.html')
-});
+app.use(express.static('public'));
 
 app.get('/api/v1/bucket_list', (request, response) => {
   database('bucket_list').select()
