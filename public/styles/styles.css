@@ -1,0 +1,79 @@
+body {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-size: 40px;
+  margin: 30px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  margin: 10px;
+  width: 200px;
+  height: 20px;
+  border: 2px solid black;
+}
+
+#submit {
+  width: 150px;
+  height: 30px;
+  font-size: 15px;
+  border: 2px solid black;
+  box-shadow: 5px 5px 0px 0px black;
+  margin-bottom: 20px;
+}
+
+hr {
+  border: 0;
+  height: 2px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+#list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 10px;
+  height: 100px;
+  width: 300px;
+  border: 2px solid black;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+.delete-button {
+  border: 2px solid black;
+  box-shadow: 3px 3px 0px 0px black;
+  margin-bottom: 20px;
+}
+
+p {
+  margin: 10px;
+}

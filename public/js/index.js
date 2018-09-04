@@ -43,10 +43,12 @@ class Item {
 const appendItem = (item) => {
   $('#list-container').append(`
   <div class="item-card" id="${item.id}">
-    <h3>${item.title}</h3>
-    <button id="${item.id}">
-      delete
-    </button>
+    <div class="card-top">
+      <h3>${item.title}</h3>
+      <button class="delete-button" id="${item.id}">
+        delete
+      </button>
+    </div>
     <p>${item.description}</p>
   </div>
   `)
