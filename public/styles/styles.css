@@ -56,6 +56,7 @@ hr {
   height: 100px;
   width: 300px;
   border: 2px solid black;
+  box-shadow: 3px 3px 0px 0px black;
 }
 
 .card-top {

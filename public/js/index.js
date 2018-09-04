@@ -30,6 +30,12 @@ const submitItem = async (event) => {
   const id = result.id;
   item = new Item(title, description, id);
   appendItem(item);
+  clearInputs()
+}
+
+const clearInputs = () => {
+  $('#title').val('');
+  $('#description').val('');
 }
 
 class Item {
