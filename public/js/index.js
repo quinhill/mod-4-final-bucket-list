@@ -14,10 +14,18 @@ const fetchAll = async () => {
 
 fetchAll();
 
-const submitItem = async (event) => {
+const checkInputs = (event) => {
   event.preventDefault();
   const title = $('#title').val();
   const description = $('#description').val();
+  if (title === '' || description === '') {
+    alert('Please make sure you have filled in the title and description')
+  } else {
+    submitItem($('#title').val(), $('#description').val());
+  }
+}
+
+const submitItem = async (title, description) => {
   const options = {
     method: "POST",
     headers: {
@@ -75,5 +83,5 @@ const deleteCard = async (id) => {
   fetchAll();
 }
 
-$('#bucket-list-form').on('submit', submitItem)
+$('#bucket-list-form').on('submit', checkInputs)
 $('#list-container').on('click', '.item-card', deleteItem);
