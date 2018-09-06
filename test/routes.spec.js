@@ -53,7 +53,7 @@ describe('All routes', () => {
     });
 
   describe('POST /api/v1/bucket_list', () => {
-    it('should add an item', done => {
+    it('should add an item to the bucket list with a title and description', done => {
       chai.request(server)
         .post('/api/v1/bucket_list')
         .send({
@@ -66,16 +66,26 @@ describe('All routes', () => {
           res.body.should.be.a('object');
           res.body.should.have.property('id');
           res.body.id.should.equal(4);
+        });
+        chai.request(server)
+        .get('/api/v1/bucket_list')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('array');
+          res.body.length.should.equal(4);
+          res.body[3].title.should.equal('Hong Kong');
+          res.body[3].description.should.equal('Go to Hong Kong');
           done();
         });
       });
       
       it('should not create a record with missing data', done => {
         chai.request(server)
-        .post('/api/v1/projects')
+        .post('/api/v1/bucket_list')
         .send({ description: 'Super dooper!' })
         .end((err, response) => {
-          response.should.have.status(404);
+          response.should.have.status(422);
           done();
         });
       });
@@ -96,7 +106,8 @@ describe('All routes', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.should.be.json;
-          res.body.length.should.equal(2);
+          res.body.should.be.a('array');
+          res.body.length.should.equal(3);
           done();
         });
     });
@@ -105,8 +116,8 @@ describe('All routes', () => {
       chai.request(server)
         .delete('/api/v1/bucket_list/5')
         .end((err, res) => {
-          res.should.have.status(422);
-          res.error.text.should.equal('{"error":"422: No items found matching that ID."}');
+          res.should.have.status(404);
+          res.error.text.should.equal('{"error":"404: No items found matching that ID."}');
           done();
         });
     });

@@ -23,33 +23,18 @@ app.get('/api/v1/bucket_list', (request, response) => {
     });
 });
 
-app.get('/api/v1/bucket_list/:id', (request, response) => {
-  const { id } = request.params;
-
-  database('bucket_list').where('id', id).select()
-    .then(item => {
-      if (item.length) {
-        return response.status(200).json(item);
-      }
-      return response.status(404).json({error: '404: List item not found'});
-    })
-    .catch(() => (
-      response.status(500).send({'Error': '500: Internal server error'})
-    ));
-});
-
 app.post('/api/v1/bucket_list', (request, response) => {
   const item = request.body;
 
-  for (let requiredParameters of [
+  for (let requiredParameter of [
     'title',
     'description'
   ]) {
-    if (!item[requiredParameters]) {
+    if (!item[requiredParameter]) {
       return response
-        .status(404)
+        .status(422)
         .send({error: `Expected format: { title: <String>, description: <String> }. 
-        You're missing a "${requiredParameters}" property.`});
+        You're missing a "${requiredParameter}" property.`});
     }
   }
   database('bucket_list').insert(item, 'id')
@@ -67,7 +52,7 @@ app.delete('/api/v1/bucket_list/:id', (request, response) => {
   database('bucket_list').where('id', id).del()
     .then(foundId => {
       if (!foundId) {
-        return response.status(422).json({error: '422: No items found matching that ID.'})
+        return response.status(404).json({error: '404: No items found matching that ID.'})
       }
       return response.status(200).json(foundId);
     })
